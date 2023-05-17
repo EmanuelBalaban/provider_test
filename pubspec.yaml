@@ -1,6 +1,6 @@
 name: provider_test
 description: A testing library which makes it easy to test providers. Built after bloc_test package.
-version: 1.0.0
+version: 2.0.0
 
 repository: https://github.com/EmanuelBalaban/provider_test
 issue_tracker: https://github.com/EmanuelBalaban/provider_test/issues
@@ -8,8 +8,8 @@ issue_tracker: https://github.com/EmanuelBalaban/provider_test/issues
 # documentation: https://github.com/
 
 environment:
-  sdk: '>=2.19.0 <4.0.0'
-  flutter: '>=3.7.0'
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
 
 dependencies:
   flutter:
@@ -36,7 +36,7 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
   # Lint rules for Dart and Flutter used internally at Very Good Ventures.
-  very_good_analysis: ^4.0.0+1
+  very_good_analysis: ^5.0.0
 
 dependency_overrides:
   collection: ^1.17.2

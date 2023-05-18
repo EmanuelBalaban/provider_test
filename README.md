@@ -103,8 +103,8 @@ For more information about `configuring tags`, please refer to the [official doc
 
 ## Compatibility
 
-- Dart 2: >= 2.19
-- Flutter 3: >= 3.7.0
+- Dart 3: >= 3.0.0
+- Flutter 3: >= 3.10.0
 
 ## Maintainers
 

@@ -1,6 +1,6 @@
 name: provider_test
 description: A testing library which makes it easy to test providers. Built after bloc_test package.
-version: 2.0.0
+version: 2.0.1
 
 repository: https://github.com/EmanuelBalaban/provider_test
 issue_tracker: https://github.com/EmanuelBalaban/provider_test/issues

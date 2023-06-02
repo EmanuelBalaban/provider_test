@@ -1,7 +1,7 @@
-import 'package:provider_test/provider_test.dart';
 import 'package:test/test.dart';
 
-import 'providers/counter_provider.dart';
+import 'package:provider_test/provider_test.dart';
+import '../../example/providers/counter_provider.dart';
 
 void main() {
   group(CounterProvider, () {

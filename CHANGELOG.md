@@ -1,3 +1,9 @@
+# 2.0.2
+
+- doc: update `example.dart`
+- test: add counter provider example tests
+- feat: update dependencies
+
 # 2.0.1
 
 - doc: update compatibility section

@@ -32,8 +32,8 @@ import 'package:test/test.dart' as test;
 /// [expect] is an optional `Map` used to match the changes in the states of the
 /// `provider`. The key is the selector of the property to listen to. The value
 /// is the list of states or matchers to verify against the updates in the given
-/// property. Please be aware that updates are detected only if
-/// `notifyListeners` has been called.
+/// property. Updates are detected only when `notifyListeners` is called, and
+/// every expected update must be observed before the test completes.
 ///
 /// [verify] is an optional callback which is invoked after the [expect] and
 /// before [tearDown] and can be used for additional verification/assertions.
@@ -180,11 +180,14 @@ Future<void> _testProvider<P extends ChangeNotifier>({
   test.TestFailure? testFailure;
 
   final checked = List<Object>.empty(growable: true);
+  final pendingExpectations = expect?.map(
+    (selector, states) => MapEntry(selector, List<Object>.of(states)),
+  );
   void listen() {
-    if (expect == null || testFailure != null) return;
+    if (pendingExpectations == null || testFailure != null) return;
 
-    for (var index = 0; index < expect.entries.length; index++) {
-      final entry = expect.entries.elementAt(index);
+    for (var index = 0; index < pendingExpectations.length; index++) {
+      final entry = pendingExpectations.entries.elementAt(index);
       final selector = entry.key;
 
       final expected = entry.value.firstOrNull;
@@ -202,15 +205,14 @@ Future<void> _testProvider<P extends ChangeNotifier>({
 
       // Update checked states
       checked[index] = state;
-      // ignore: avoid-ignoring-return-values
       entry.value.removeAt(0);
     }
   }
 
-  if (expect != null) {
+  if (pendingExpectations != null) {
     // Cache initial states of the provider
     // (so that we are able to detect changes)
-    for (final selector in expect.keys) {
+    for (final selector in pendingExpectations.keys) {
       checked.add(selector.call(provider));
     }
     provider.addListener(listen);
@@ -225,6 +227,18 @@ Future<void> _testProvider<P extends ChangeNotifier>({
 
   // ignore: avoid-non-null-assertion
   if (testFailure != null) throw testFailure!;
+
+  if (pendingExpectations != null) {
+    final missingExpectations = pendingExpectations.entries
+        .where((entry) => entry.value.isNotEmpty)
+        .map((entry) => entry.value)
+        .toList();
+    if (missingExpectations.isNotEmpty) {
+      test.fail(
+        'Expected provider changes were not notified: $missingExpectations',
+      );
+    }
+  }
 
   await verify?.call(provider);
   await tearDown?.call();

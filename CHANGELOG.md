@@ -1,3 +1,8 @@
+# 2.0.3
+
+- fix: fail when expected provider changes were not notified
+- chore: update development dependencies and Flutter tooling
+
 # 2.0.2
 
 - doc: update `example.dart`

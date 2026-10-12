@@ -18,7 +18,7 @@ A testing library which makes it easy to test providers. Built after [bloc_test]
 
 `wait` is an optional `Duration` which can be used to wait for async operations within the `provider` under test such as `debounceTime`.
 
-`expect` is an optional `Map` used to match the changes in the states of the `provider`. The key is the selector of the property to listen to. The value is the list of states or matchers to verify against the updates in the given property. Please be aware that updates are detected only if `notifyListeners` has been called.
+`expect` is an optional `Map` used to match changes in the provider's state. The key is a selector for the property to listen to. The value is a list of states or matchers to verify in order. Changes are detected only when `notifyListeners` is called, and the test fails if any expected changes were not notified before `act` (and the optional `wait`) completes.
 
 `verify` is an optional callback which is invoked after the `expect` and before `tearDown` and can be used for additional verification/assertions. `verify` is called with the `provider` returned by `build`.
 
